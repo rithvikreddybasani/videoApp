@@ -1,0 +1,93 @@
+/* RoomPage.css */
+
+.room-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    padding: 20px;
+  }
+  h1.page-title {
+    font-size: 36px; /* Large text size */
+    font-weight: bold; /* Bold text */
+    color: #333; /* Dark color for better readability */
+    margin-bottom: 20px;
+  }
+  
+  h4.status {
+    font-size: 28px; /* Large text size */
+    font-weight: bold; /* Bold text */
+    color: #007bff; /* Primary color */
+    margin-bottom: 20px;
+  }
+  
+  .streams-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .stream {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .stream h1 {
+    margin-bottom: 10px;
+    font-size: 36px; /* Large text size */
+    font-weight: bold; /* Bold text */
+    color: #333; /* Dark color for better readability */
+  }
+  
+  .stream h4 {
+    font-size: 24px; /* Slightly smaller than h1 */
+    font-weight: bold; /* Bold text */
+    color: #333; /* Dark color for better readability */
+  }
+  
+  /* Button styles */
+  button {
+    background-color: #007bff; /* Primary color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 15px 25px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Darker shade */
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .streams-container {
+      flex-direction: column;
+    }
+  
+    h1, h4 {
+      color: #007bff; /* Color for smaller screens */
+    }
+  
+    h1 {
+      font-size: 28px; /* Adjusted text size for smaller screens */
+    }
+  
+    h4 {
+      font-size: 20px; /* Adjusted text size for smaller screens */
+    }
+  
+    button {
+      width: 100%;
+      font-size: 16px;
+      padding: 12px 20px;
+    }
+  }
+  
