@@ -7,8 +7,8 @@ import "./RoomPage.css"; // Import the CSS file
 const RoomPage = () => {
   const socket = useSocket();
   const [remoteSocketId, setRemoteSocketId] = useState(null);
-  const [myStream, setMyStream] = useState();
-  const [remoteStream, setRemoteStream] = useState();
+  const [myStream, setMyStream] = useState(null);
+  const [remoteStream, setRemoteStream] = useState(null);
 
   const handleUserJoined = useCallback(({ email, id }) => {
     console.log(`Email ${email} joined room`);
@@ -41,9 +41,9 @@ const RoomPage = () => {
   );
 
   const sendStreams = useCallback(() => {
-    for (const track of myStream.getTracks()) {
+    myStream.getTracks().forEach(track => {
       peer.peer.addTrack(track, myStream);
-    }
+    });
   }, [myStream]);
 
   const handleCallAccepted = useCallback(
@@ -80,10 +80,10 @@ const RoomPage = () => {
   }, []);
 
   useEffect(() => {
-    peer.peer.addEventListener("track", async (ev) => {
-      const remoteStream = ev.streams;
-      console.log("GOT TRACKS!!");
-      setRemoteStream(remoteStream[0]);
+    peer.peer.addEventListener("track", (ev) => {
+      const [remoteStream] = ev.streams;
+      console.log("GOT TRACKS!!", remoteStream);
+      setRemoteStream(remoteStream);
     });
   }, []);
 
@@ -112,14 +112,18 @@ const RoomPage = () => {
 
   return (
     <div className="room-container">
-      <h1>Room Page</h1>
-      <h4>{remoteSocketId ? "Connected" : "No one in room"}</h4>
-      {myStream && <button onClick={sendStreams}>Send Stream</button>}
-      {remoteSocketId && <button onClick={handleCallUser}>CALL</button>}
+      <h1 className="room-title">Room Page</h1>
+      <h4 className="status">
+        {remoteSocketId ? "Connected" : "No one in room"}
+      </h4>
+      <div className="buttons">
+        {myStream && <button onClick={sendStreams}>Send Stream</button>}
+        {remoteSocketId && <button onClick={handleCallUser}>CALL</button>}
+      </div>
       <div className="streams-container">
         {myStream && (
           <div className="stream">
-            <h1>My Stream</h1>
+            <h2>My Stream</h2>
             <ReactPlayer
               playing
               muted
@@ -131,7 +135,7 @@ const RoomPage = () => {
         )}
         {remoteStream && (
           <div className="stream">
-            <h1>Remote Stream</h1>
+            <h2>Remote Stream</h2>
             <ReactPlayer
               playing
               muted
