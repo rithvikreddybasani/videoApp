@@ -46,11 +46,18 @@ const RoomPage = () => {
     [socket]
   );
 
-  const sendStreams = useCallback(() => {
-    myStream.getTracks().forEach(track => {
-      peer.peer.addTrack(track, myStream);
-    });
-  }, [myStream]);
+const sendStreams = useCallback(() => {
+  const senders = peer.peer.getSenders(); // Get all the existing senders
+  myStream.getTracks().forEach((track) => {
+    const sender = senders.find((s) => s.track === track); // Check if the track is already being sent
+    if (!sender) {
+      peer.peer.addTrack(track, myStream); // Only add the track if it's not already added
+    } else {
+      console.log("Track already added:", track);
+    }
+  });
+}, [myStream]);
+
 
   const handleCallAccepted = useCallback(
     ({ from, ans }) => {
